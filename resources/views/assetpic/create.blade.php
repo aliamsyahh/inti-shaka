@@ -8,28 +8,32 @@
                         <h6 class="m-0 font-weight-bold text-primary">Form Asset</h6>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('asset.store') }}" method="POST">
+                        <form action="{{ route('pic.store') }}" method="POST">
                             @csrf
                             @if (Auth::user()->role == 'admin')
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Workplace</label>
-                                    <select name="workplaces_id" class="form-control" id="workplace">
-                                        <option value="">--Pilih Workplace--</option>
-                                        @foreach ($workplace as $data)
+                                    <label for="exampleInputEmail1">asset</label>
+                                    <select name="assets_id" class="form-control" id="asset" required>
+                                        <option value="">--Pilih asset--</option>
+                                        @foreach ($asset as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             @else
-                                <input type="hidden" name="workplaces_id" value="{{ Auth::user()->workplaces_id }}">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">asset</label>
+                                    <select name="assets_id" class="form-control" id="asset" required>
+                                        <option value="">--Pilih asset--</option>
+                                        @foreach (Auth::user()->workplace->asset as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             @endif
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Name Asset</label>
-                                <input type="text" class="form-control" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Asset Description</label>
-                                <input type="text" class="form-control" name="description" required>
+                                <label for="exampleInputEmail1">PIC Name</label>
+                                <input type="text" class="form-control" name="pic" required>
                             </div>
                             <div class="form-group form-check">
                                 <input type="checkbox" class="form-check-input" name="is_active"

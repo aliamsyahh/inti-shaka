@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Workplace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -14,8 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $assets = Asset::all();
-        return view('asset.index', compact('assets'));
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -25,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('asset.create');
+        $workplace = Workplace::all();
+        return view('user.create', compact('workplace'));
     }
 
     /**
@@ -36,9 +41,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        Asset::create($request->all());
-        Alert::Success('Berhasil', 'asset Berhasil Ditambah');
-        return redirect(route('asset.index'));
+        $is_active = $request->has('is_active') ? true : false;
+        $request['is_active'] = $is_active;
+        User::create([
+            'workplaces_id' => $request->workplaces_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'is_active' => $request->is_active,
+        ]);
+        Alert::Success('Berhasil', 'User Berhasil Ditambah');
+        return redirect(route('user.index'));
     }
 
     /**
@@ -58,9 +72,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Asset $item)
+    public function edit($id)
     {
-        return view('asset.edit', compact('item'));
+        $workplace = Workplace::all();
+        $item = User::findOrFail($id);
+        return view('user.edit', compact('item', 'workplace'));
     }
 
     /**
@@ -70,11 +86,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Asset $item)
+    public function update(Request $request, $id)
     {
+        $is_active = $request->has('is_active') ? true : false;
+        $request['is_active'] = $is_active;
+        $item = User::findOrFail($id);
+        if ($request->password != null) {
+            $request['password'] = Hash::make($request->password);
+        } else {
+            $request['password'] = $item->password;
+        }
         $item->update($request->except('_token'));
-        Alert::Success('Berhasil', 'asset Berhasil Diupdate');
-        return redirect(route('asset.index'));
+        Alert::Success('Berhasil', 'User Berhasil Diupdate');
+        return redirect(route('user.index'));
     }
 
     /**
@@ -83,10 +107,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(asset $item)
+    public function destroy($id)
     {
+        $item = User::findOrFail($id);
         $item->delete();
-        Alert::Error('Berhasil', 'asset Berhasil Dihapus');
-        return redirect(route('asset.index'));
+        Alert::Error('Berhasil', 'User Berhasil Dihapus');
+        return redirect(route('user.index'));
     }
 }

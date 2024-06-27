@@ -15,7 +15,7 @@ class Asset extends Model
         return $this->belongsTo(Workplace::class, 'workplaces_id', 'id');
     }
 
-    public function assetPicLink()
+    public function pic()
     {
         return $this->hasMany(AssetPicLink::class, 'assets_id', 'id');
     }

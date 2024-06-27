@@ -29,7 +29,7 @@ class WorkplaceController extends Controller
     public function create()
     {
         $companies = Company::all();
-        return view('workplace.create');
+        return view('workplace.create', compact('companies'));
     }
 
     /**
@@ -42,7 +42,13 @@ class WorkplaceController extends Controller
     {
         $is_active = $request->has('is_active') ? true : false;
         $request['is_active'] = $is_active;
-        Workplace::create($request->all());
+        Workplace::create([
+            'companies_id' => $request->companies_id,
+            'name' => $request->name,
+            'contact_number' => $request->contact_number,
+            'address' => $request->address,
+            'is_active' => $request->is_active,
+        ]);
         Alert::Success('Berhasil', 'workplace Berhasil Ditambah');
         return redirect(route('workplace.index'));
     }
@@ -82,7 +88,13 @@ class WorkplaceController extends Controller
         $item = Workplace::findOrFail($id);
         $is_active = $request->has('is_active') ? true : false;
         $request['is_active'] = $is_active;
-        $item->update($request->except('_token'));
+        $item->update([
+            'companies_id' => $request->companies_id,
+            'name' => $request->name,
+            'contact_number' => $request->contact_number,
+            'address' => $request->address,
+            'is_active' => $request->is_active,
+        ]);
         Alert::Success('Berhasil', 'workplace Berhasil Diupdate');
         return redirect(route('workplace.index'));
     }

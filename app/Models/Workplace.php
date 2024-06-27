@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Workplace extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
     protected $fillbale = ['companies_id', 'name', 'contact_number', 'address', 'is_active', 'created_by', 'updated_by'];
 
     public function company()

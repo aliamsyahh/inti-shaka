@@ -51,10 +51,6 @@ class AssetController extends Controller
             $request['code'] = 'A' . sprintf('%04d', $kodeQuery->id + 1);
         }
         $asset = Asset::create($request->all());
-        AssetPicLink::Create([
-            'assets_id' => $asset->id,
-            'pic'       => $request->pic
-        ]);
         Alert::Success('Berhasil', 'asset Berhasil Ditambah');
         return redirect(route('asset.index'));
     }
@@ -93,6 +89,8 @@ class AssetController extends Controller
      */
     public function update(Request $request, Asset $item)
     {
+        $is_active = $request->has('is_active') ? true : false;
+        $request['is_active'] = $is_active;
         $item->update($request->except('_token'));
         Alert::Success('Berhasil', 'asset Berhasil Diupdate');
         return redirect(route('asset.index'));

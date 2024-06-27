@@ -22,6 +22,9 @@
     <script src="{{ URL::asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+    <link rel="stylesheet" href="{{ asset('js/jquery-treetable/css/screen.css') }}" />
+    <link rel="stylesheet" href="{{ asset('js/jquery-treetable/css/jquery.treetable.theme.default.css') }}" />
+
     <!-- Core plugin JavaScript-->
     <script src="{{ URL::asset('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
@@ -275,6 +278,8 @@
     <!-- Core plugin JavaScript-->
     <script src="{{ URL::asset('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
     <!-- Custom scripts for all pages-->
     <script src="{{ URL::asset('assets/js/sb-admin-2.min.js') }}"></script>
 
@@ -285,12 +290,11 @@
     <!-- Page level custom scripts -->
     <script src="{{ URL::asset('assets/js/demo/datatables-demo.js') }}"></script>
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-    <script src="{{ asset('js/jquery-treetable/jquery.treetable.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-treetable/3.2.0/jquery.treetable.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/Gruntfile.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css"
-        rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css"rel="stylesheet">
     @yield('script')
 </body>
 
