@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AssetController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\WorkplaceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::resource('company', CompanyController::class);
 Route::resource('asset', AssetController::class);
 Route::resource('workplace', WorkplaceController::class);
+Route::get('/export/asset', [ExportController::class, 'asset'])->name('export.asset');
+Route::get('/export/company', [ExportController::class, 'company'])->name('export.company');
+Route::get('/export/workplace', [ExportController::class, 'workplace'])->name('export.workplace');
